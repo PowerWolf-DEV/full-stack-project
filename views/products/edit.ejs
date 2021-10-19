@@ -1,0 +1,53 @@
+<div class="create-blog content">
+  <form>
+    <h2>Edit Product</h2>
+    <div class="doc error"></div>
+    <%- include('_form_fields') %>
+    <a href="/products">Cancel</a>
+    <input type="hidden" name="id" value="<%= product.id %>">
+    <button type="submit">Update</button>
+  </form>
+</div>
+
+<script>
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  const form = document.querySelector('form')
+  const titleError = document.querySelector('.title.error')
+  const priceError = document.querySelector('.price.error')
+  const docError = document.querySelector('.doc.error')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    // reset errors
+    titleError.textContent = ''
+    priceError.textContent = ''
+    docError.textContent = ''
+    
+    // get values
+    let productId = form.id.value
+    let endpoint = `/products/${productId}`
+    let title = form.title.value
+    let description = form.description.value
+    let price = form.price.value
+    let cover = form.cover.value
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'PUT',
+        body: JSON.stringify({ title, price, description, cover }),
+        headers: {'Content-Type': 'application/json', 'CSRF-Token': token}
+      })
+      const data = await res.json()
+      if (data.errors) {
+        titleError.textContent = data.errors.title
+        priceError.textContent = data.errors.price
+        docError.textContent = data.errors.doc
+      }
+      if (data.updatedProduct) {
+        location.assign(`/products/${data.updatedProduct}`)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+</script>

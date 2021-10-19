@@ -1,0 +1,69 @@
+<div class="create-blog content">
+  <form action="/products" method="POST">
+    <h2>New product</h2>
+    <div class="doc error"></div>
+    <div>
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" value="<%= product.title %>">
+      <div class="title error"></div>
+    </div>
+    
+    <div>
+      <label for="description">Description</label>
+      <textarea name="description" id="description"><%= product.description %></textarea>
+    </div>
+    
+    <div>
+      <label for="price">Price</label>
+      <input type="number" name="price" id="price" min="1" value="<%= product.price %>">
+      <div class="price error"></div>
+    </div>
+    
+    <div>
+      <label for="cover">Cover</label>
+      <input type="file" name="cover" id="cover" class="filepond" required>
+    </div>
+    <a href="/products">Cancel</a>
+    <button type="submit">Create</button>
+  </form>
+</div>
+
+<script>
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  const form = document.querySelector('form')
+  const titleError = document.querySelector('.title.error')
+  const priceError = document.querySelector('.price.error')
+  const docError = document.querySelector('.doc.error')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    // reset errors
+    titleError.textContent = ''
+    priceError.textContent = ''
+    docError.textContent = ''
+    // get values
+    let title = form.title.value
+    let description = form.description.value
+    let price = form.price.value
+    let cover = form.cover.value
+
+    try {
+      const res = await fetch('/products', {
+        method: 'POST',
+        body: JSON.stringify({ title, price, description, cover }),
+        headers: {'Content-Type': 'application/json', 'CSRF-Token': token}
+      })
+      const data = await res.json()
+      if (data.errors) {
+        titleError.textContent = data.errors.title
+        priceError.textContent = data.errors.price
+        docError.textContent = data.errors.doc
+      }
+      if (data.newProduct) {
+        location.assign(`/products/${data.newProduct}`)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+</script>

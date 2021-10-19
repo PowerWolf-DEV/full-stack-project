@@ -1,0 +1,36 @@
+<div class="create-blog content">
+  <form>
+    <h2>Title: <%= product.title %> </h2>
+    <img width="100" height="150 "src="<%= product.coverImagePath %>">
+    <div>Price: <%= product.price %> &#x20b4</div>
+
+    <a href="/products/<%= product.id %>/edit">Edit</a>
+    <input type="hidden" name="id" value="<%= product.id %>">
+    <button type="submit">Delete</button>
+  </form>
+</div>
+
+<script>
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  const form = document.querySelector('form')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    // get values
+    let productId = form.id.value
+    let endpoint = `/products/${productId}`
+    
+    try {
+      const res = await fetch(endpoint, {
+        method: 'DELETE',
+        headers: {'CSRF-Token': token}
+      })
+      const data = await res.json()
+      if (data.success) {
+        location.assign('/products')
+      }
+    } catch(err) {
+      console.log(err)
+    }
+  })
+</script>
