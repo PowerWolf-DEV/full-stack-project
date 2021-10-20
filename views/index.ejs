@@ -1,0 +1,12 @@
+<h2>Recently Added</h2>
+<% if (products.length > 0) { %>
+  <% products.forEach(product => { %>
+    <a href="/products/<%= product.id %>">
+      <div><%= product.title %></div>
+      <div><%= product.price %> &#x20b4</div>
+      <img height="150" width="100" src="<%= product.coverImagePath %>">
+    </a>
+  <% }) %>
+<% } else { %>
+  <p>There are no products to display...</p>
+<% } %>

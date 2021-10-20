@@ -26,15 +26,6 @@ const blog_create_get = (req, res) => {
 }
 
 const blog_details = (req, res) => {
-  // try {
-  //   const blog = await Blog.findById(req.params.id)
-  //   if (blog == null) {
-  //     return res.redirect('/')
-  //   }
-  //   res.render('details', { blog, title: 'Blog details' })
-  // } catch (err) {
-  //   res.redirect('/')
-  // }
   const id = req.params.id
   Blog.findById(id)
     .then((result) => {
