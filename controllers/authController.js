@@ -83,7 +83,7 @@ const signup_post = async (req, res) => {
       res.status(201).json({ user: user._id })
       await transporter.sendMail(regEmail(email))
     } else {
-      throw new Error('Password mismatch')
+      throw Error('Password mismatch')
     }
   } catch (err) {
     const errors = handleErrors(err)
@@ -129,7 +129,7 @@ const reset_post = async (req, res) => {
       res.status(201).json({ user: user._id })
       await transporter.sendMail(resetPass(user.email, token))
     } else {
-      throw new Error('incorrect email')
+      throw Error('incorrect email')
     }
   } catch (err) {
     const errors = handleErrors(err)
@@ -157,8 +157,8 @@ const password_get = async (req, res) => {
         token: req.params.token
       })
     }
-  } catch (e) {
-    console.log(e)
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -176,8 +176,6 @@ const password_post = async (req, res) => {
       user.resetTokenExp = undefined
       await user.save()
       res.status(201).json({ user: user._id })
-    } else {
-      throw Error('incorrect password')
     }
   } catch (err) {
     const errors = handleErrors(err)

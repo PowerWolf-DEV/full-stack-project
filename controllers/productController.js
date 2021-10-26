@@ -133,10 +133,9 @@ const product_delete = async (req, res) => {
   try {
     let product = await Product.findById(req.params.id)
     await product.remove()
-    res.json({ message: 'Product Deleted' })
+    res.json({ message: 'Product deleted' })
   } catch (err) {
-    const errors = handleErrors(err)
-    res.status(500).json({ errors })
+    res.status(500).json({ error: 'Could not remove product' })
   }
 }
 

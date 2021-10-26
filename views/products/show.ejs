@@ -1,5 +1,6 @@
 <div class="create-blog content">
   <form>
+    <div class="data error"></div>
     <h2>Title: <%= product.title %> </h2>
     <img width="100" height="150 "src="<%= product.coverImagePath %>">
     <div>Price: <%= product.price %> &#x20b4</div>
@@ -13,9 +14,12 @@
 <script>
   const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const form = document.querySelector('form')
+  const dataError = document.querySelector('.data.error')
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
+    // reset errors
+    dataError.textContent = ''
     // get values
     let productId = form.id.value
     let endpoint = `/products/${productId}`
@@ -26,6 +30,9 @@
         headers: {'CSRF-Token': token}
       })
       const data = await res.json()
+      if (data.error) {
+        dataError.textContent = data.error
+      }
       if (data.message) {
         location.assign('/products')
       }
