@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
   }
   res.render('index', { 
     products: products,
-    title: 'Recently Added Products'
+    title: 'Home'
   })
 })
 

@@ -1,20 +1,32 @@
-<nav>
-  <div class="site-title">
-    <a href="/"><h1>Blog Ninja</h1></a>
-    <p>A Net Ninja Site</p>
-  </div>
-  <ul>
-    <li><a href="/blogs">Blogs</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/products">Products</a></li>
-    <li><a href="/products/new">Add Product</a></li>
-    <% if (user) { %>
-      <li>Welcome, <%= user.email %> </li>
-      <li><a href="/blogs/create">New Blog</a></li>
-      <li><a href="/auth/logout">log out</a></li>
-    <% } else { %>   
-      <li><a href="/auth/signup">Sign up</a></li>
-      <li><a href="/auth/login">log in</a></li>
-    <% } %> 
-  </ul>
-</nav>
+<!--===== HEADER =====-->
+<header class="l-header">
+  <nav class="nav bd-grid">
+      <div>
+          <a href="/" class="nav__logo">SP Family Shop</a>
+      </div>
+
+      <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+              <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
+              <li class="nav__item"><a href="#featured" class="nav__link">Featured</a></li>
+              <li class="nav__item"><a href="#new" class="nav__link">New</a></li>
+              <li class="nav__item"><a href="#subscribe" class="nav__link">Subscribe</a></li>
+              <!-- <li class="nav__item"><a href="/about" class="nav__link">About</a></li>
+              <li class="nav__item"><a href="/products" class="nav__link">Products</a></li>
+              <% if (user) { %>
+                <li class="nav__item"><a class="nav__link" href="/products/new">Add Product</a></li>
+                <li class="nav__item"><a class="nav__link" href="/auth/logout">log out</a></li>
+              <% } else { %>   
+                <li class="nav__item"><a class="nav__link" href="/auth/signup">Sign up</a></li>
+                <li class="nav__item"><a class="nav__link" href="/auth/login">log in</a></li>
+              <% } %>  -->
+          </ul>
+      </div>
+
+      <div>
+          <a class="nav__link" href="#"><i class='bx bx-cart nav__cart'></i></a>
+          
+          <i class='bx bx-menu nav__toggle' id="nav-toggle"></i>
+      </div>
+  </nav>
+</header>

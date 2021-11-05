@@ -1,19 +1,29 @@
-<h2>Search Products</h2>
-<form action="/products" method="GET">
-  <label for="title">Title</label>
-  <input type="text" name="title" value="<%= searchOptions.title %>">
-  <button type="submit">Search</button>
-</form>
-<br>
+<section class="product section">
+  <h2 class="section-title">Search Products</h2>
+  <form class="search__form" action="/products" method="GET">
+    <label for="title">Title</label>
+    <input class="search__input" type="text" name="title" value="<%= searchOptions.title %>">
+    <button type="submit">Search</button>
+  </form>
 
-<% if (products.length > 0) { %>
-  <% products.forEach(product => { %>
-    <a href="/products/<%= product.id %>">
-      <div><%= product.title %></div>
-      <div><%= product.price %> &#x20b4</div>
-      <img height="150" width="100" src="<%= product.coverImagePath %>">
-    </a>
-  <% }) %>
-<% } else { %>
-  <p>There are no products to display...</p>
-<% } %>
+  <div class="new__container bd-grid">
+    <% if (products.length > 0) { %>
+      <% products.forEach(product => { %>
+        <div class="featured__product">
+          <div class="featured__box">
+            <img class="product__img" src="<%= product.coverImagePath %>">
+          </div>
+          <div class="featured__data">
+            <h3 class="featured__name"><%= product.title %></h3>
+            <span class="featured__price"><%= product.price %> &#x20b4</span>
+            <a class="btn btn-primary" href="/products/<%= product.id %>">VIEW</a>
+            <button class="btn btn-primary">ADD TO CART</button>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>There are no products to display...</p>
+    <% } %>
+  </div>
+</section>
+
